@@ -45,4 +45,33 @@ class UploadController extends Controller
 
         return "File berhasil diupload ke: " . asset($tujuan_upload.'/'.$file->getClientOriginalName());
     }
-}
+
+            public function dropzone()
+        {
+            return view('dropzone');
+        }
+
+        public function dropzone_store(Request $request)
+        {
+            $image = $request->file('file');
+
+            $imageName = time().'.'.$image->extension();
+            $image->move(public_path('img/dropzone'), $imageName);
+            return response()->json(['success' => $imageName]);
+        }
+
+        public function pdf_upload()
+        {
+            return view('pdf_upload');
+        }
+
+        public function pdf_store(Request $request)
+        {
+            $pdf = $request->file('file');
+
+            $pdfName = 'pdf_'.time().'.'.$pdf->extension();
+            $pdf->move(public_path('pdf/dropzone'), $pdfName);
+            return response()->json(['success' => $pdfName]);
+        }
+
+        }
